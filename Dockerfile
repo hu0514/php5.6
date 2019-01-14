@@ -2,7 +2,8 @@
 FROM centos
 
 #yum install base packages
-RUN yum install -y gcc gcc-c++ ncurses-devel libxml2-devel openssl-devel curl-devel libjpeg-devel libpng-devel autoconf pcre-devel libtool-libs freetype-devel gd zlib-devel zip unzip wget  file bison cmake patch mlocate flex diffutils automake make  readline-devel  glibc-devel glibc-static glib2-devel  bzip2-devel gettext-devel libcap-devel logrotate openssl expect mysql-devel \
+RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && yum install -y gcc gcc-c++ ncurses-devel libxml2-devel openssl-devel curl-devel libjpeg-devel libpng-devel autoconf pcre-devel libtool-libs freetype-devel gd zlib-devel zip unzip wget  file bison cmake patch mlocate flex diffutils automake make  readline-devel  glibc-devel glibc-static glib2-devel  bzip2-devel gettext-devel libcap-devel logrotate openssl expect mysql-devel \
     && groupadd www \
     && useradd -s /sbin/nologin -g www www \
     && cd /mnt \
@@ -35,5 +36,5 @@ RUN yum install -y gcc gcc-c++ ncurses-devel libxml2-devel openssl-devel curl-de
 #    && ln -sf /dev/stderr /usr/local/php5.6/php-fpm.log
 ADD ./files/php-fpm.conf  /usr/local/php5.6/etc/
 ADD ./files/php.ini /usr/local/php5.6/etc/
-CMD ["/usr/bin/php-fpm","-F"]
+ENTRYPOINT ["/usr/bin/php-fpm","-F"]
 #EXPOSE 9000
